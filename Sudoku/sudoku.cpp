@@ -10,21 +10,21 @@
 int sudoku[9][9];
 FILE *fp; 
 
-/*¼ì²éÊı¶ÀÆåÅÌÄÚÊı×ÖÊÇ·ñ·ûºÏ¹æÔò£¨¼´Í¬ĞĞÍ¬ÁĞÍ¬¾Å¹¬¸ñÄÚÃ»ÓĞÖØ¸´Êı×Ö£©*/
+/*æ£€æŸ¥æ•°ç‹¬æ£‹ç›˜å†…æ•°å­—æ˜¯å¦ç¬¦åˆè§„åˆ™ï¼ˆå³åŒè¡ŒåŒåˆ—åŒä¹å®«æ ¼å†…æ²¡æœ‰é‡å¤æ•°å­—ï¼‰*/
 int check(int sudoku[][9], int i, int j){
 	int p,q,m,n;
 	int t = sudoku[i][j];
 	
-	//ºáÏò¼ì²é
+	//æ¨ªå‘æ£€æŸ¥
 	for (p = 0; p<9; p++)
 		if (p != i && sudoku[p][j] == t)
 			return 0;
-	//×İÏò¼ì²é
+	//çºµå‘æ£€æŸ¥
 	for (p = 0; p<9; p++)
 		if (p != j && sudoku[i][p] == t)
 			return 0;
 
-    //¾Å¹¬¸ñÄÚ¼ì²é 
+    //ä¹å®«æ ¼å†…æ£€æŸ¥ 
 	p = i / 3;
 	q = j / 3;
 	for (m = p * 3; m<p * 3 + 3; m++)
@@ -32,12 +32,12 @@ int check(int sudoku[][9], int i, int j){
 			if (m != i && n != j && sudoku[m][n] == t)
 				return 0;
 
-	//·ûºÏÌõ¼ş·µ»Ø1 
+	//ç¬¦åˆæ¡ä»¶è¿”å›1 
 	return 1;
 }
 
-/*Êä³ö9*9µÄÊı¶ÀÆåÅÌ*/
-void sudoku_print(int sudoku[][9]){
+/*è¾“å‡º9*9çš„æ•°ç‹¬æ£‹ç›˜*/
+void sudokuPrint(int sudoku[][9]){
 	int i, j; 
 	for (i = 0; i < 9; i++){
 		printf("%4d", sudoku[i][0]);  
@@ -51,7 +51,7 @@ void sudoku_print(int sudoku[][9]){
 	}
 }
 
-/*ÓÃ»ØËİ·¨»ñÈ¡N¸öÊı¶ÀÆåÅÌ*/
+/*ç”¨å›æº¯æ³•è·å–Nä¸ªæ•°ç‹¬æ£‹ç›˜*/
 int getSudoku(int N){
 	int k = 0, num = 0;
 	fp=fopen("sudoku.txt","w");
@@ -72,9 +72,9 @@ int getSudoku(int N){
 		}
 
 		if (k == 81){
-			printf("µÚ%d¸öÊı¶ÀÆåÅÌ: \n", ++num);
+			printf("ç¬¬%dä¸ªæ•°ç‹¬æ£‹ç›˜: \n", ++num);
 			fp=fopen("sudoku.txt","a");
-			sudoku_print(sudoku);
+			sudokuPrint(sudoku);
 			fprintf(fp,"\n");  
 			if (num >= N){
 				printf("over!\n");
@@ -91,26 +91,26 @@ int main(int argc, char ** argv){
 	int i, j, t = 0, r = 1;
 	char* arg1 = argv[1]; 
 	int N = atoi(argv[2]);
-	//´íÎó´¦Àí 
+	//é”™è¯¯å¤„ç† 
 	if(!(arg1[0] == '-' && arg1[1] == 'c')){
-		printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÔËĞĞ.\n");
+		printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¿è¡Œ.\n");
 		return 0;
 	}
 	if(N == 0){
-		printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÔËĞĞ.\n");
+		printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¿è¡Œ.\n");
 		return 0;
 	}
 	/*while(1){
 			int l = scanf("%d",&N);
 			if(l == 0){
-				printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë.\n");
+				printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥.\n");
 				fflush(stdin);
 				continue;
 			} else {
 				break;
 			}
 	}*/
-	//ÓÃµ±Ç°Ê±¼äÊ¹rand()»ñÈ¡µÄËæ»úÊı¸ü¾ßÓĞËæ»úĞÔ 
+	//ç”¨å½“å‰æ—¶é—´ä½¿rand()è·å–çš„éšæœºæ•°æ›´å…·æœ‰éšæœºæ€§ 
 	srand(time(0));
 	for (i = 0; i < 9; i++)
 		for (j = 0; j < 9; j++)
