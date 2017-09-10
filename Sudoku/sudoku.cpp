@@ -10,21 +10,21 @@
 int sudoku[9][9];
 FILE *fp; 
 
-/*æ£€æŸ¥æ•°ç‹¬æ£‹ç›˜å†…æ•°å­—æ˜¯å¦ç¬¦åˆè§„åˆ™ï¼ˆå³åŒè¡ŒåŒåˆ—åŒä¹å®«æ ¼å†…æ²¡æœ‰é‡å¤æ•°å­—ï¼‰*/
+/*¼ì²éÊý¶ÀÆåÅÌÄÚÊý×ÖÊÇ·ñ·ûºÏ¹æÔò£¨¼´Í¬ÐÐÍ¬ÁÐÍ¬¾Å¹¬¸ñÄÚÃ»ÓÐÖØ¸´Êý×Ö£©*/
 int check(int sudoku[][9], int i, int j){
 	int p,q,m,n;
 	int t = sudoku[i][j];
 	
-	//æ¨ªå‘æ£€æŸ¥
+	//ºáÏò¼ì²é
 	for (p = 0; p<9; p++)
 		if (p != i && sudoku[p][j] == t)
 			return 0;
-	//çºµå‘æ£€æŸ¥
+	//×ÝÏò¼ì²é
 	for (p = 0; p<9; p++)
 		if (p != j && sudoku[i][p] == t)
 			return 0;
 
-    //ä¹å®«æ ¼å†…æ£€æŸ¥ 
+    //¾Å¹¬¸ñÄÚ¼ì²é 
 	p = i / 3;
 	q = j / 3;
 	for (m = p * 3; m<p * 3 + 3; m++)
@@ -32,11 +32,11 @@ int check(int sudoku[][9], int i, int j){
 			if (m != i && n != j && sudoku[m][n] == t)
 				return 0;
 
-	//ç¬¦åˆæ¡ä»¶è¿”å›ž1 
+	//·ûºÏÌõ¼þ·µ»Ø1 
 	return 1;
 }
 
-/*è¾“å‡º9*9çš„æ•°ç‹¬æ£‹ç›˜*/
+/*Êä³ö9*9µÄÊý¶ÀÆåÅÌ*/
 void sudokuPrint(int sudoku[][9]){
 	int i, j; 
 	for (i = 0; i < 9; i++){
@@ -51,7 +51,7 @@ void sudokuPrint(int sudoku[][9]){
 	}
 }
 
-/*ç”¨å›žæº¯æ³•èŽ·å–Nä¸ªæ•°ç‹¬æ£‹ç›˜*/
+/*ÓÃ»ØËÝ·¨»ñÈ¡N¸öÊý¶ÀÆåÅÌ*/
 int getSudoku(int N){
 	int k = 0, num = 0;
 	fp=fopen("sudoku.txt","w");
@@ -72,7 +72,7 @@ int getSudoku(int N){
 		}
 
 		if (k == 81){
-			printf("ç¬¬%dä¸ªæ•°ç‹¬æ£‹ç›˜: \n", ++num);
+			printf("µÚ%d¸öÊý¶ÀÆåÅÌ: \n", ++num);
 			fp=fopen("sudoku.txt","a");
 			sudokuPrint(sudoku);
 			fprintf(fp,"\n");  
@@ -91,35 +91,39 @@ int main(int argc, char ** argv){
 	int i, j, t = 0, r = 1;
 	char* arg1 = argv[1]; 
 	int N = atoi(argv[2]);
-	//é”™è¯¯å¤„ç† 
+	//´íÎó´¦Àí 
 	if(!(arg1[0] == '-' && arg1[1] == 'c')){
-		printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¿è¡Œ.\n");
+		printf("ÊäÈëÓÐÎó£¬ÇëÖØÐÂÔËÐÐ.\n");
 		return 0;
 	}
 	if(N == 0){
-		printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¿è¡Œ.\n");
+		printf("ÊäÈëÓÐÎó£¬ÇëÖØÐÂÔËÐÐ.\n");
 		return 0;
 	}
-	/*while(1){
+	/*int N; 
+	while(1){
 			int l = scanf("%d",&N);
 			if(l == 0){
-				printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥.\n");
+				printf("ÊäÈëÓÐÎó£¬ÇëÖØÐÂÊäÈë.\n");
 				fflush(stdin);
 				continue;
 			} else {
 				break;
 			}
 	}*/
-	//ç”¨å½“å‰æ—¶é—´ä½¿rand()èŽ·å–çš„éšæœºæ•°æ›´å…·æœ‰éšæœºæ€§ 
+	//ÓÃµ±Ç°Ê±¼äÊ¹rand()»ñÈ¡µÄËæ»úÊý¸ü¾ßÓÐËæ»úÐÔ 
 	srand(time(0));
 	for (i = 0; i < 9; i++)
 		for (j = 0; j < 9; j++)
 			sudoku[i][j] = 0;
+	sudoku[0][0]=(1+0)% 9;
 	for (i = 0; i < 9; i++){
-		sudoku[0][0]=(1+0)% 9;
 		t = (rand() + r) % 81;
+		if(t == 0)
+			t++;
 		sudoku[t / 9][t % 9] = i + 1;
 	}
 	getSudoku(N);
 	return 0;
 }
+
