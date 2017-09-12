@@ -40,10 +40,10 @@ int check(int sudoku[][9], int i, int j){
 void sudokuPrint(int sudoku[][9]){
 	int i, j; 
 	for (i = 0; i < 9; i++){
-		printf("%4d", sudoku[i][0]);  
+		//printf("%4d", sudoku[i][0]);  
 		fprintf(fp,"%d",sudoku[i][0]);  
 		for (j = 1; j < 9; j++){
-			printf("%4d", sudoku[i][j]);  
+			//printf("%4d", sudoku[i][j]);  
     		fprintf(fp," %d",sudoku[i][j]);  
 		}
 		fprintf(fp,"\n");  
@@ -72,12 +72,12 @@ int getSudoku(int N){
 		}
 
 		if (k == 81){
-			printf("第%d个数独棋盘: \n", ++num);
+			//printf("第%d个数独棋盘: \n", ++num);
 			fp=fopen("sudoku.txt","a");
 			sudokuPrint(sudoku);
 			fprintf(fp,"\n");  
 			if (num >= N){
-				printf("over!\n");
+				//printf("over!\n");
 				fclose(fp);
 				return 0;
 			}
